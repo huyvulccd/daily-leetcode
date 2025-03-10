@@ -1,11 +1,50 @@
 package org.example.problems;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class Solution{
+
+    // https://leetcode.com/problems/median-of-two-sorted-arrays/
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int length = nums1.length + nums2.length;
+        int medianPosition = length/2;
+
+        if (length == 0)
+            return 0;
+
+        if (length == 1)
+            return nums1.length == 0 ? nums2[0] : nums1[0];
+
+        boolean isEven = length % 2 == 1;
+
+        int[] nums = new int[medianPosition+1];
+
+        int i = 0, j = 0;
+        while (i < nums1.length && j < nums2.length && i + j < nums.length) {
+            if (nums1[i] < nums2[j]) {
+                nums[i+j] = nums1[i];
+                i++;
+            } else {
+                nums[i+j] = nums2[j];
+                j++;
+            }
+        }
+
+        if (i + j < nums.length) {
+            if (i < nums1.length) {
+                System.arraycopy(nums1, i, nums, i+j, nums.length - (i+j));
+            }
+            if (j < nums2.length) {
+                System.arraycopy(nums2, j, nums, i+j, nums.length - (i+j));
+            }
+        }
+
+        return isEven
+                ? nums[medianPosition]
+                :(nums[medianPosition] + nums[medianPosition - 1]) / 2.0;
+    }
+
     // https://leetcode.com/problems/longest-substring-without-repeating-characters/ solved in 2 hours
     public int lengthOfLongestSubstring(String s) {
         if (s.length() <= 1) return s.length();

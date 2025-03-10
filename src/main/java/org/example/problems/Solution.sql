@@ -1,3 +1,8 @@
+# https://leetcode.com/problems/replace-employee-id-with-the-unique-identifier/?envType=study-plan-v2&envId=top-sql-50
+SELECT t2.unique_id, t1.name
+FROM Employees AS t1
+LEFT JOIN EmployeeUNI t2 ON t1.id = t2.id;
+
 # https://leetcode.com/problems/invalid-tweets/?envType=study-plan-v2&envId=top-sql-50
 SELECT tweet_id FROM Tweets
 WHERE length(content) > 15
