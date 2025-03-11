@@ -5,6 +5,34 @@ import java.util.Map;
 
 public class Solution{
 
+    //https://leetcode.com/problems/longest-palindromic-substring/
+    public String longestPalindrome(String s) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0 ; i < s.length(); i++) {
+            sb.append("*").append(s.charAt(i));
+        }
+        sb.append("*");
+        int n = sb.length();
+
+        int centerRes = 0, leftRes = 0;
+
+        for (int center = 1 ; center < n - 1; center++) {
+            int left = 1;
+            int borderMax = center * 2 < n ? center : n - center - 1;
+
+
+            while (left <= borderMax && sb.charAt(center - left) == sb.charAt(center + left)) {
+                left++;
+            }
+            if (left > leftRes) {
+                centerRes = center;
+                leftRes = left - 1;
+            }
+        }
+
+        return sb.subSequence(centerRes-leftRes, centerRes + leftRes).toString().replace("*", "");
+    }
     // https://leetcode.com/problems/median-of-two-sorted-arrays/
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int length = nums1.length + nums2.length;
